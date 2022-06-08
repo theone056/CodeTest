@@ -10,14 +10,9 @@ namespace CodeTest.DBContext
 {
     public class CodeTestDbContext:DbContext
     {
-        IConfiguration configuration;
-        public CodeTestDbContext(IConfiguration _configuration)
-        {
-            configuration = _configuration;
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("ConnectionStringCodeTest"));
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=CODETEST;Trusted_Connection=True;");
         }
 
         public DbSet<Classes> Classes { get; set; }
