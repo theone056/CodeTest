@@ -1,8 +1,87 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Classes</h2>
+        <a class="add-button">+ Add New Class</a>
+        <table id="myTableClass">
+            <thead>
+                <tr>
+                    <th>
+                        Class Name
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Teacher Name
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cl in (List<Classes>)ViewData["Classes"])
+                {
+                    <tr>
+                        <td>
+                            @cl.ClassName
+                        </td>
+                        <td>
+                            @cl.Location
+                        </td>
+                        <td>
+                            @cl.TeacherName
+                        </td>
+                        <td>
+                            <button id="edit-class">Edit</button>
+                        </td>
+                        <td>
+                            <button id="delete-class">Delete</button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+   
+    <div class="col-md-12 mt-5 pt-5 border-top">
+        <h2>Students</h2>
+        <h3 id="classValue"></h3>
+        <a class="add-button-student">+ Add New Student</a>
+        <table id="myTableStudent">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Age
+                    </th>
+                    <th>
+                        GPA
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+

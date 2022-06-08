@@ -14,5 +14,13 @@ namespace CodeTest.Repository
         Task<List<Classes>> GetClasses();
 
         Task<List<Student>> GetStudents(string className);
+
+        Task<int> EditClass(Classes classes);
+
+        Task<int> EditStudent(Student student);
+
+        Task<int> RemoveClass(Classes classes);
+
+        Task<int> RemoveStudent(Student student);
     }
 }

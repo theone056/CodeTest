@@ -36,6 +36,30 @@ namespace CodeTest.Repository
             }
         }
 
+        public async Task<int> EditClass(Classes classes)
+        {
+            if (classes == null) throw new Exception("null");
+            using(var ctx = new CodeTestDbContext())
+            {
+                var entity = ctx.Classes.Find(classes.ClassName);
+                if (entity == null) throw new Exception("Class not available");
+                ctx.Entry(entity).CurrentValues.SetValues(classes);
+                return await ctx.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> EditStudent(Student student)
+        {
+            if (student == null) throw new Exception("null");
+            using (var ctx = new CodeTestDbContext())
+            {
+                var entity = ctx.Students.Find(student.StudentId);
+                if (entity == null) throw new Exception("Student not available");
+                ctx.Entry(entity).CurrentValues.SetValues(student);
+                return await ctx.SaveChangesAsync();
+            }
+        }
+
         public async Task<List<Classes>> GetClasses()
         {
             using(var ctx = new CodeTestDbContext())
@@ -54,6 +78,32 @@ namespace CodeTest.Repository
                 var StudentList = await ctx.Students.Where(c => c.ClassName == className).ToListAsync();
                 if (StudentList.Count == 0) throw new Exception("No Student Found");
                 return StudentList;
+            }
+        }
+
+        public async Task<int> RemoveClass(Classes classes)
+        {
+            if (classes == null) throw new Exception("null");
+            using (var ctx = new CodeTestDbContext())
+            {
+                var entity = ctx.Classes.Find(classes.ClassName);
+                if (entity == null) throw new Exception("Class not available");
+                ctx.Classes.Attach(entity);
+                ctx.Classes.Remove(entity);
+                return await ctx.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> RemoveStudent(Student student)
+        {
+            if (student == null) throw new Exception("null");
+            using (var ctx = new CodeTestDbContext())
+            {
+                var entity = ctx.Students.Find(student.StudentId);
+                if (entity == null) throw new Exception("Class not available");
+                ctx.Students.Attach(entity);
+                ctx.Students.Remove(entity);
+                return await ctx.SaveChangesAsync();
             }
         }
     }

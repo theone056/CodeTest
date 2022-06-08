@@ -8,6 +8,24 @@ namespace CodeTest.Test
 {
     public class Tests
     {
+        [Test]
+        public async Task EditStudent()
+        {
+            IRepo repo = new Repo();
+            Student student = new Student()
+            {
+                StudentId = 1,
+                FirstName = "Derick",
+                LastName = "Colon",
+                Age = 25,
+                GPA = 1.5,
+                ClassName = "Science"
+            };
+
+            var result = await repo.EditStudent(student);
+            Assert.AreEqual(1, result);
+        }
+
 
         [Test]
         public void AddStudentClassNotAvailable()
