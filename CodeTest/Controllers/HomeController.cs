@@ -23,8 +23,11 @@ namespace CodeTest.Controllers
 
         public async Task<IActionResult> Index()
         {
-          
-            ViewData["Classes"] = await GetClasses();
+            var result = await GetClasses();
+            if (result != null)
+            {
+                ViewData["Classes"] = result;
+            }
             return View();
         }
 

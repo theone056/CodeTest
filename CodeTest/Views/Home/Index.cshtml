@@ -29,25 +29,28 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var cl in (List<Classes>)ViewData["Classes"])
+                @if (ViewData["Classes"] != null)
                 {
-                    <tr>
-                        <td>
-                            @cl.ClassName
-                        </td>
-                        <td>
-                            @cl.Location
-                        </td>
-                        <td>
-                            @cl.TeacherName
-                        </td>
-                        <td>
-                            <button id="edit-class">Edit</button>
-                        </td>
-                        <td>
-                            <button id="delete-class">Delete</button>
-                        </td>
-                    </tr>
+                    @foreach (var cl in (List<Classes>)ViewData["Classes"])
+                    {
+                        <tr>
+                            <td>
+                                @cl.ClassName
+                            </td>
+                            <td>
+                                @cl.Location
+                            </td>
+                            <td>
+                                @cl.TeacherName
+                            </td>
+                            <td>
+                                <button id="edit-class">Edit</button>
+                            </td>
+                            <td>
+                                <button id="delete-class">Delete</button>
+                            </td>
+                        </tr>
+                    }
                 }
 
             </tbody>

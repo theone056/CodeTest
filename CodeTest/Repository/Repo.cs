@@ -10,10 +10,15 @@ namespace CodeTest.Repository
 {
     public class Repo : IRepo
     {
+        private CodeTestDbContext _codeTest;
+        public Repo(CodeTestDbContext codeTest)
+        {
+            _codeTest = codeTest;
+        }
         public async Task<int> AddClass(Classes classes)
         {
             if (classes == null) throw new Exception("null");
-            using (var ctx = new CodeTestDbContext())
+            using (var ctx = _codeTest)
             {
                 var classcount = ctx.Classes.Where(c => c.ClassName == classes.ClassName);
                 if (classcount.Count() > 0) throw new Exception("Duplicate Class");
@@ -26,7 +31,7 @@ namespace CodeTest.Repository
         {
             if (student == null) throw new Exception("null");
            
-            using(var ctx = new CodeTestDbContext())
+            using(var ctx = _codeTest)
             {
                 if (ctx.Classes.Find(student.ClassName) == null) throw new Exception("Class not available");
                 var duplicate = ctx.Students.Where(c => c.LastName == student.LastName && c.ClassName == student.ClassName);
@@ -39,7 +44,7 @@ namespace CodeTest.Repository
         public async Task<int> EditClass(Classes classes)
         {
             if (classes == null) throw new Exception("null");
-            using(var ctx = new CodeTestDbContext())
+            using(var ctx = _codeTest)
             {
                 var entity = ctx.Classes.Find(classes.ClassName);
                 if (entity == null) throw new Exception("Class not available");
@@ -51,7 +56,7 @@ namespace CodeTest.Repository
         public async Task<int> EditStudent(Student student)
         {
             if (student == null) throw new Exception("null");
-            using (var ctx = new CodeTestDbContext())
+            using (var ctx = _codeTest)
             {
                 var entity = ctx.Students.Find(student.StudentId);
                 if (entity == null) throw new Exception("Student not available");
@@ -62,10 +67,10 @@ namespace CodeTest.Repository
 
         public async Task<List<Classes>> GetClasses()
         {
-            using(var ctx = new CodeTestDbContext())
+            using(var ctx = _codeTest)
             {
                 var ClassList = await ctx.Classes.ToListAsync();
-                if (ClassList.Count == 0) throw new Exception("No Data Found");
+                if (ClassList.Count == 0) return new List<Classes>();
                 return ClassList;
             }
         }
@@ -73,10 +78,10 @@ namespace CodeTest.Repository
         public async Task<List<Student>> GetStudents(string className)
         {
             if (String.IsNullOrEmpty(className)) throw new Exception();
-            using(var ctx = new CodeTestDbContext())
+            using(var ctx = _codeTest)
             {
                 var StudentList = await ctx.Students.Where(c => c.ClassName == className).ToListAsync();
-                if (StudentList.Count == 0) throw new Exception("No Student Found");
+                if (StudentList.Count == 0) return new List<Student>();
                 return StudentList;
             }
         }
@@ -84,7 +89,7 @@ namespace CodeTest.Repository
         public async Task<int> RemoveClass(Classes classes)
         {
             if (classes == null) throw new Exception("null");
-            using (var ctx = new CodeTestDbContext())
+            using (var ctx = _codeTest)
             {
                 var entity = ctx.Classes.Find(classes.ClassName);
                 if (entity == null) throw new Exception("Class not available");
@@ -97,7 +102,7 @@ namespace CodeTest.Repository
         public async Task<int> RemoveStudent(Student student)
         {
             if (student == null) throw new Exception("null");
-            using (var ctx = new CodeTestDbContext())
+            using (var ctx = _codeTest)
             {
                 var entity = ctx.Students.Find(student.StudentId);
                 if (entity == null) throw new Exception("Class not available");

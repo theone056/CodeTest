@@ -10,10 +10,18 @@ namespace CodeTest.DBContext
 {
     public class CodeTestDbContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public CodeTestDbContext(DbContextOptions<CodeTestDbContext> options): base(options)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=CODETEST;Trusted_Connection=True;");
+
         }
+        public CodeTestDbContext()
+        {
+
+        }
+        //////protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //////{
+        //////    optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=CODETEST;Trusted_Connection=True;");
+        //////}
 
         public DbSet<Classes> Classes { get; set; }
         public DbSet<Student> Students { get; set; }
